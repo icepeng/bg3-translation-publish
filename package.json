@@ -1,0 +1,19 @@
+{
+  "name": "bg3-waldo",
+  "private": true,
+  "workspaces": ["core", "web"],
+  "scripts": {
+    "build": "ultra -r build",
+    "dev": "ultra -r dev",
+    "lint": "biome check ./**/*.{ts,tsx}",
+    "lint:fix": "biome check ./**/*.{ts,tsx} --apply",
+    "format": "biome format ./**/*.{ts,tsx}",
+    "format:fix": "biome format ./**/*.{ts,tsx} --write"
+  },
+  "packageManager": "yarn@3.6.3",
+  "devDependencies": {
+    "@biomejs/biome": "^1.1.2",
+    "typescript": "^5.2.2",
+    "ultra-runner": "^3.10.5"
+  }
+}
