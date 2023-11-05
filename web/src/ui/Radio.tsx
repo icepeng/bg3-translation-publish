@@ -1,5 +1,6 @@
 "use client";
 
+import * as CheckboxPrimitive from "@radix-ui/react-checkbox";
 import * as RadioGroupPrimitive from "@radix-ui/react-radio-group";
 import * as React from "react";
 
@@ -7,7 +8,7 @@ import { cx, sva } from "../../styled-system/css";
 import { styled } from "../../styled-system/jsx";
 
 const recipe = sva({
-  slots: ["group", "item", "control", "icon", "label", "description"],
+  slots: ["group", "item", "control", "check_control", "icon", "check_icon", "label", "description", "image"],
   base: {
     group: {
       display: "grid",
@@ -59,8 +60,37 @@ const recipe = sva({
         borderColor: "gray.300",
       },
     },
+    check_control: {
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+
+      borderRadius: "20%",
+      borderWidth: 1,
+      borderColor: "gray.600",
+      width: "24px",
+      height: "24px",
+
+      _groupChecked: {
+        backgroundColor: "gray.900",
+        borderWidth: 0,
+      },
+      _groupDisabled: {
+        backgroundColor: "none",
+        borderColor: "gray.300",
+      },
+    },
     icon: {
-      borderRadius: "100%",
+      borderRadius: "full",
+      width: "12px",
+      height: "12px",
+      backgroundColor: "white",
+      _groupDisabled: {
+        backgroundColor: "gray.200",
+      },
+    },
+    check_icon: {
+      borderRadius: "10%",
       width: "12px",
       height: "12px",
       backgroundColor: "white",
@@ -70,19 +100,27 @@ const recipe = sva({
     },
     label: {
       ml: 2,
-      fontSize: 16,
+      fontSize: 18,
       fontWeight: "semibold",
       color: "gray.900",
     },
     description: {
-      ml: 8,
-      fontSize: 14,
-      color: "gray.600",
+      mt: 2,
+      fontSize: 16,
+      color: "gray.900",
     },
+    image: {
+      mt: 4,
+      borderRadius: 8,
+      width: "100%",
+      height: "100%",
+      objectFit: "cover",
+      objectPosition: "left",
+    }
   },
 });
 
-const radio = recipe();
+const selector = recipe();
 
 const RadioGroup = React.forwardRef<
   React.ElementRef<typeof RadioGroupPrimitive.Root>,
@@ -90,7 +128,7 @@ const RadioGroup = React.forwardRef<
 >(({ className, ...props }, ref) => {
   return (
     <RadioGroupPrimitive.Root
-      className={cx(radio.group, className)}
+      className={cx(selector.group, className)}
       {...props}
       ref={ref}
     />
@@ -101,29 +139,61 @@ RadioGroup.displayName = RadioGroupPrimitive.Root.displayName;
 export interface RadioProps
   extends React.ComponentPropsWithoutRef<typeof RadioGroupPrimitive.Item> {
   label: string;
-  description: string;
+  description?: string | React.ReactNode;
+  image_url?: string;
 }
 
 const Radio = React.forwardRef<
   React.ElementRef<typeof RadioGroupPrimitive.Item>,
   RadioProps
->(({ className, label, description, ...props }, ref) => {
+>(({ className, label, description, image_url, ...props }, ref) => {
   return (
     <RadioGroupPrimitive.Item
       ref={ref}
-      className={cx("group", radio.item, className)}
+      className={cx("group", selector.item, className)}
       {...props}
     >
       <styled.div display="flex" alignItems="center">
-        <div className={radio.control}>
-          <RadioGroupPrimitive.Indicator className={radio.icon} />
+        <div className={selector.control}>
+          <RadioGroupPrimitive.Indicator className={selector.icon} />
         </div>
-        <span className={radio.label}>{label}</span>
+        <span className={selector.label}>{label}</span>
       </styled.div>
-      <div className={radio.description}>{description}</div>
+      {image_url && <img className={selector.image} src={image_url} />}
+      <div className={selector.description}>{description}</div>
     </RadioGroupPrimitive.Item>
   );
 });
 Radio.displayName = RadioGroupPrimitive.Item.displayName;
 
-export { Radio, RadioGroup };
+export interface CheckProps
+  extends React.ComponentPropsWithoutRef<typeof CheckboxPrimitive.Checkbox> {
+  label: string;
+  description?: string;
+  image_url?: string;
+}
+
+const Check = React.forwardRef<
+  React.ElementRef<typeof CheckboxPrimitive.Checkbox>,
+  CheckProps
+>(({ className, label, description, image_url, ...props }, ref) => {
+  return (
+    <CheckboxPrimitive.Checkbox
+      ref={ref}
+      className={cx("group", selector.item, className)}
+      {...props}
+    >
+      <styled.div display="flex" alignItems="center">
+        <div className={selector.check_control}>
+          <CheckboxPrimitive.Indicator className={selector.check_icon} />
+        </div>
+        <span className={selector.label}>{label}</span>
+      </styled.div>
+      {image_url && <img className={selector.image} src={image_url} />}
+      {description && <div className={selector.description}>{description}</div>}
+    </CheckboxPrimitive.Checkbox>
+  );
+});
+Check.displayName = CheckboxPrimitive.Checkbox.displayName;
+
+export { Radio, RadioGroup, Check };

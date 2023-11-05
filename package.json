@@ -1,7 +1,10 @@
 {
   "name": "bg3-waldo",
   "private": true,
-  "workspaces": ["core", "web"],
+  "workspaces": [
+    "core",
+    "web"
+  ],
   "scripts": {
     "build": "ultra -r build",
     "dev": "ultra -r dev",
@@ -15,5 +18,8 @@
     "@biomejs/biome": "^1.1.2",
     "typescript": "^5.2.2",
     "ultra-runner": "^3.10.5"
+  },
+  "dependencies": {
+    "@radix-ui/react-checkbox": "^1.0.4"
   }
 }
