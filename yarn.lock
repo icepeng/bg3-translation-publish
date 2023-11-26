@@ -462,10 +462,12 @@ __metadata:
   dependencies:
     "@bg3-waldo/core": "workspace:^"
     "@pandacss/dev": ^0.14.0
+    "@radix-ui/react-checkbox": ^1.0.4
     "@radix-ui/react-radio-group": ^1.1.3
     "@types/react": ^18.2.15
     "@types/react-dom": ^18.2.7
     "@vitejs/plugin-react-swc": ^3.3.2
+    lucide-react: ^0.293.0
     react: ^18.2.0
     react-dom: ^18.2.0
     typescript: ^5.0.2
@@ -3118,7 +3120,6 @@ __metadata:
   resolution: "bg3-waldo@workspace:."
   dependencies:
     "@biomejs/biome": ^1.1.2
-    "@radix-ui/react-checkbox": ^1.0.4
     typescript: ^5.2.2
     ultra-runner: ^3.10.5
   languageName: unknown
@@ -5080,6 +5081,15 @@ __metadata:
   version: 10.0.1
   resolution: "lru-cache@npm:10.0.1"
   checksum: 06f8d0e1ceabd76bb6f644a26dbb0b4c471b79c7b514c13c6856113879b3bf369eb7b497dad4ff2b7e2636db202412394865b33c332100876d838ad1372f0181
+  languageName: node
+  linkType: hard
+
+"lucide-react@npm:^0.293.0":
+  version: 0.293.0
+  resolution: "lucide-react@npm:0.293.0"
+  peerDependencies:
+    react: ^16.5.1 || ^17.0.0 || ^18.0.0
+  checksum: 576bda3a7fc31352b1e65ade93f268b1a9f85b4a02f24cf02bb26ac4a879686692f463c56f04682fe7c31f517d62fde2f90769d3f083aa4fb0f0b26780a2dc8b
   languageName: node
   linkType: hard
 

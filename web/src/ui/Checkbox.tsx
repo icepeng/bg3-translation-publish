@@ -1,20 +1,16 @@
 "use client";
 
-import * as RadioGroupPrimitive from "@radix-ui/react-radio-group";
+import * as CheckboxPrimitive from "@radix-ui/react-checkbox";
 import * as React from "react";
 
 import { cx, sva } from "../../styled-system/css";
 import { styled } from "../../styled-system/jsx";
+import { CheckIcon } from "lucide-react";
 
 const recipe = sva({
-  slots: ["group", "item", "control", "icon", "label"],
+  slots: ["root", "control", "icon", "label"],
   base: {
-    group: {
-      display: "grid",
-      gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
-      gap: 4,
-    },
-    item: {
+    root: {
       all: "unset",
       cursor: "pointer",
       display: "flex",
@@ -44,7 +40,7 @@ const recipe = sva({
       alignItems: "center",
       justifyContent: "center",
 
-      borderRadius: "full",
+      borderRadius: "sm",
       borderWidth: 1,
       borderColor: "gray.600",
       width: "24px",
@@ -60,12 +56,11 @@ const recipe = sva({
       },
     },
     icon: {
-      borderRadius: "100%",
-      width: "12px",
-      height: "12px",
-      backgroundColor: "white",
+      width: "20px",
+      height: "20px",
+      color: "white",
       _groupDisabled: {
-        backgroundColor: "gray.200",
+        color: "gray.200",
       },
     },
     label: {
@@ -77,48 +72,36 @@ const recipe = sva({
   },
 });
 
-const radio = recipe();
+const checkbox = recipe();
 
-const RadioGroup = React.forwardRef<
-  React.ElementRef<typeof RadioGroupPrimitive.Root>,
-  React.ComponentPropsWithoutRef<typeof RadioGroupPrimitive.Root>
->(({ className, ...props }, ref) => {
-  return (
-    <RadioGroupPrimitive.Root
-      className={cx(radio.group, className)}
-      {...props}
-      ref={ref}
-    />
-  );
-});
-RadioGroup.displayName = RadioGroupPrimitive.Root.displayName;
-
-export interface RadioProps
-  extends React.ComponentPropsWithoutRef<typeof RadioGroupPrimitive.Item> {
+export interface CheckProps
+  extends React.ComponentPropsWithoutRef<typeof CheckboxPrimitive.Checkbox> {
   label: string;
-  children: React.ReactNode;
+  children?: React.ReactElement;
 }
 
-const Radio = React.forwardRef<
-  React.ElementRef<typeof RadioGroupPrimitive.Item>,
-  RadioProps
+const Checkbox = React.forwardRef<
+  React.ElementRef<typeof CheckboxPrimitive.Checkbox>,
+  CheckProps
 >(({ className, label, children, ...props }, ref) => {
   return (
-    <RadioGroupPrimitive.Item
+    <CheckboxPrimitive.Checkbox
       ref={ref}
-      className={cx("group", radio.item, className)}
+      className={cx("group", checkbox.root, className)}
       {...props}
     >
       <styled.div display="flex" alignItems="center">
-        <div className={radio.control}>
-          <RadioGroupPrimitive.Indicator className={radio.icon} />
+        <div className={checkbox.control}>
+          <CheckboxPrimitive.Indicator>
+            <CheckIcon className={checkbox.icon} />
+          </CheckboxPrimitive.Indicator>
         </div>
-        <span className={radio.label}>{label}</span>
+        <span className={checkbox.label}>{label}</span>
       </styled.div>
       {children}
-    </RadioGroupPrimitive.Item>
+    </CheckboxPrimitive.Checkbox>
   );
 });
-Radio.displayName = RadioGroupPrimitive.Item.displayName;
+Checkbox.displayName = CheckboxPrimitive.Checkbox.displayName;
 
-export { Radio, RadioGroup };
+export { Checkbox };

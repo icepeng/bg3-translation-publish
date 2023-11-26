@@ -18,8 +18,5 @@
     "@biomejs/biome": "^1.1.2",
     "typescript": "^5.2.2",
     "ultra-runner": "^3.10.5"
-  },
-  "dependencies": {
-    "@radix-ui/react-checkbox": "^1.0.4"
   }
 }
